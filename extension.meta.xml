@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<extension id="simple_mde_for_symphony" status="experimental" xmlns="http://getsymphony.com/schemas/extension/1.0">
+	<name>SimpleMDE Editor for Symphony</name>
+	<description>Add SimpleMDE Markdown Editor to markdown enabled fields.</description>
+	<repo type="github">https://github.com/fhamon/simplemde-for-symphony</repo>
+	<authors>
+		<author>
+			<name github="fhamon" symphony="frederick">Frédérick Hamon</name>
+		</author>
+	</authors>
+	<releases>
+		<release version="0.1" date="2016-12-20" min="2.6.8" />
+	</releases>
+</extension>

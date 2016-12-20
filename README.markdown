@@ -1,0 +1,1 @@
+#Simple MDE extension for Symphony CMS

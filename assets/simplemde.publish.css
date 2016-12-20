@@ -1,0 +1,128 @@
+/* forced line-breaks */
+.cm-trailing-space-new-line:before {
+  content: '¬';
+  color: red;
+}
+
+/* button size */
+.editor-toolbar a:before {
+  font-size: 15px;
+}
+
+/* Editor font */
+.CodeMirror {
+	font-size: 1.5em;
+}
+
+/* Heading size */
+
+.field-simplemde {
+  margin-bottom: 2.1rem;
+}
+
+.CodeMirror, .CodeMirror-scroll {
+  min-height: 2.6rem;
+}
+
+.CodeMirror {
+  border-color: rgba(0, 0, 0, 0.25);
+  border-top-color: rgba(0, 0, 0, 0.125);
+  padding: 0.8rem 0.8rem 0.7rem 0.8rem;
+}
+
+.editor-toolbar {
+  margin-top: 0.2rem;
+  padding: 0.3rem 0.5rem 0.3rem 0.5rem;
+  background-color: #fff;
+  opacity: 1;
+}
+
+.editor-toolbar:hover {
+	opacity: 1;
+}
+
+.editor-toolbar::before,
+.editor-toolbar::after {
+  margin: 0;
+}
+
+.editor-toolbar a {
+  height: 3rem;
+  width: 3rem;
+  opacity: 1;
+  color: rgba(85, 85, 85, 0.75) !important;
+}
+
+.editor-toolbar a.active,
+.editor-toolbar a:hover {
+  color: rgb(60, 60, 60) !important;
+  border-color: rgba(0, 0, 0, 0.15) !important;
+}
+
+.editor-toolbar a.active:not(:hover) {
+  background: transparent;
+  border-color: rgba(0, 0, 0, 0) !important;
+}
+
+.editor-preview-side {
+	position: fixed;
+	bottom: 0;
+	width: 50%;
+	top: 50px;
+	right: 0;
+	z-index: 1100000;
+	border: 1px solid #ddd;
+}
+
+.CodeMirror-fullscreen {
+	background: #fff;
+	position: fixed!important;
+	top: 50px;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 1100000;
+}
+.CodeMirror-scroll {
+	//max-height: 70vh;
+}
+
+.editor-preview-side ul{
+	list-style-type: inherit;
+}
+
+.editor-preview-side ol {
+	list-style-type: decimal;
+}
+
+.editor-preview-side {
+	font-size: 1.5em;
+}
+
+.editor-preview-side h1 {
+	font-size: 200%;
+}
+
+.editor-preview-side h2 {
+	font-size: 160%;
+}
+
+.editor-preview-side h3 {
+	font-size: 125%;
+}
+
+.editor-preview-side h4 {
+	font-size: 110%;
+}
+
+.editor-preview-side h1,
+.editor-preview-side h2,
+.editor-preview-side h3,
+.editor-preview-side h4,
+.editor-preview-side h5,
+.editor-preview-side h6 {
+	padding: 0 !important;
+	margin-bottom: 2rem;
+}
+
+
