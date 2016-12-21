@@ -125,4 +125,26 @@
 	margin-bottom: 2rem;
 }
 
+.cm-quote {
+	color: #888888;
+}
+
+
+/* CSS for advanced functionality */
+
+.CodeMirror-code .cm-formatting {
+	display: none;
+}
+
+.CodeMirror .cm-formatting.cm-link, .CodeMirror .cm-formatting-link-string, .CodeMirror .cm-formatting-list {
+	display: inherit;
+}
+
+.is-advanced-mode .CodeMirror-code .cm-formatting{
+	display: inherit;
+}
+
+
+/* ------------------------------- */
+
 

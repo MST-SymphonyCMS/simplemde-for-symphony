@@ -1,5 +1,13 @@
 (function($, Simplemde, undefined) {
 	'use strict';
+
+	var openEmojiSelector = function () {
+		//
+	};
+
+	var toggleExpertMode = function () {
+		$('.CodeMirror-wrap').toggleClass('is-advanced-mode');
+	};
 	
 	$.fn.initSimplemde = function (options) {
 	
@@ -7,13 +15,43 @@
 		
 			// Editor Configuration
 			// https://github.com/NextStepWebs/simplemde-markdown-editor/
+
+			/*
+				{
+					name: 'emoji',
+					action: openEmojiSelector,
+					className: 'fa fa-smile-o',
+					title: 'Emoji'
+				},
+			*/
 			
 			var configuration = $.extend({
 				element: element,
 				spellChecker: false,
 				status: false,
 				forceSync: true,
-				indentWithTabs: false
+				indentWithTabs: false,
+				toolbar: [
+					"heading",
+					"bold",
+					"italic",
+					"strikethrough",
+					"|",
+					"quote",
+					"unordered-list",
+					"link",
+					"|",
+					"side-by-side",
+					"fullscreen",
+					{
+						name: 'advancedMode',
+						action: toggleExpertMode,
+						className: 'fa fa-code',
+						title: 'Advanced Mode'
+					},
+					"|",
+					"guide"
+				],
 			}, options );
 			
 			var simplemde = new SimpleMDE(configuration);
