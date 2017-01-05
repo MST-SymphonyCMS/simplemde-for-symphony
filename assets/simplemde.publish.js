@@ -1,9 +1,11 @@
+/*
+	Simple MDE for Symphony CMS
+	@author Frédérick Hamon (fhamon)
+*/
+
 (function($, Simplemde, undefined) {
 	'use strict';
 
-	var openEmojiSelector = function () {
-		//
-	};
 
 	var toggleExpertMode = function () {
 		$('.CodeMirror-wrap').toggleClass('is-advanced-mode');
@@ -16,14 +18,7 @@
 			// Editor Configuration
 			// https://github.com/NextStepWebs/simplemde-markdown-editor/
 
-			/*
-				{
-					name: 'emoji',
-					action: openEmojiSelector,
-					className: 'fa fa-smile-o',
-					title: 'Emoji'
-				},
-			*/
+			var ctn = $(element).closest('.field');
 			
 			var configuration = $.extend({
 				element: element,
@@ -35,7 +30,6 @@
 					"heading",
 					"bold",
 					"italic",
-					"strikethrough",
 					"|",
 					"quote",
 					"unordered-list",
@@ -48,15 +42,21 @@
 						action: toggleExpertMode,
 						className: 'fa fa-code',
 						title: 'Advanced Mode'
-					},
-					"|",
-					"guide"
-				],
+					}
+				]
 			}, options );
 			
 			var simplemde = new SimpleMDE(configuration);
-			
-			$(element).closest('.field').addClass('field-simplemde');
+
+			simplemde.codemirror.on('focus', function () {
+				$('body').addClass('editor-focused');
+			});
+
+			simplemde.codemirror.on('blur', function () {
+				$('body').removeClass('editor-focused');
+			});
+
+			ctn.addClass('field-simplemde');
 			
 			// Calculate min height based on the number of rows
 			var rows = $(element).attr('rows');
@@ -92,7 +92,54 @@
 
 (function($, undefined) {
 	'use strict';
+
+	var currentScroll = $(window).scrollTop();
+	var isDock = false;
+	var win = $(window);
+
+	var onScroll = function () {
+		$('textarea[class*="markdown"], textarea[class*="commonmark"]').each(function () {
+
+			var mde = $(this).closest('.tab-panel').find('.editor-toolbar');
+
+			currentScroll = win.scrollTop();
+
+			if (mde.data('initialOffset') === undefined || mde.data('initialOffset') === 0) {
+				mde.data('initialOffset', mde.offset().top);
+			}
+
+			if (mde.data('initialOffset') <= win.scrollTop() && mde.data('canDock') != true) {
+				mde.data('canDock', true);
+			} else if (mde.data('initialOffset') >= win.scrollTop()) {
+				mde.data('canDock', false);
+			}
+
+		});
+	};
+
+	var onPostScroll = function () {
+		$('textarea[class*="markdown"], textarea[class*="commonmark"]').each(function () {
+			var mde = $(this).closest('.tab-panel').find('.editor-toolbar');
+
+			if (mde.data('canDock') === true) {
+				mde.addClass('is-docked');
+			} else {
+				mde.removeClass('is-docked');
+			}
+		});
+	};
+
+	var scrollHandler = function () {
+		onScroll();
+		onPostScroll();
+	};
+
 	$(function() {
-		$('textarea[class*="markdown"], textarea[class*="commonmark"]').initSimplemde();
+		var txtAreas = $('textarea[class*="markdown"], textarea[class*="commonmark"]');
+		txtAreas.initSimplemde();
+
+		if (txtAreas.length) {
+			$(window).scroll(scrollHandler);
+		}
 	});
 }(this.jQuery));

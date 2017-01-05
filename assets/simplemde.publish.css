@@ -83,6 +83,15 @@
 	bottom: 0;
 	z-index: 1100000;
 }
+
+.CodeMirror .cm-quote:before {
+	content: open-quote;
+}
+
+.CodeMirror .cm-quote:after {
+	content: close-quote;
+}
+
 .CodeMirror-scroll {
 	//max-height: 70vh;
 }
@@ -125,8 +134,29 @@
 	margin-bottom: 2rem;
 }
 
+.editor-preview-side blockquote > * {
+	display: inline-block;
+}
+
+.editor-preview-side blockquote {
+	quotes: "\201C""\201D""\2018""\2019";
+}
+
+.editor-preview-side blockquote:before {
+	content: open-quote;
+}
+
+.editor-preview-side blockquote:after {
+	content: close-quote;
+}
+
 .cm-quote {
 	color: #888888;
+}
+
+/* for the emojis only */
+.editor-preview-side img[src^="https://twemoji.maxcdn.com"] {
+	width: 1em;
 }
 
 
