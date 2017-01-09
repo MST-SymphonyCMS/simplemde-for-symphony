@@ -6,7 +6,6 @@
 (function($, Simplemde, undefined) {
 	'use strict';
 
-
 	var toggleExpertMode = function () {
 		$('.CodeMirror-wrap').toggleClass('is-advanced-mode');
 	};
@@ -19,6 +18,42 @@
 			// https://github.com/NextStepWebs/simplemde-markdown-editor/
 
 			var ctn = $(element).closest('.field');
+			var focusActive = false;
+
+			var activateSyntax = function () {
+				var cm = simplemde.codemirror;
+
+				var A1 = cm.getCursor().line;
+				var A2 = cm.getCursor().ch;
+
+				var B1 = cm.findWordAt({line: A1, ch: A2}).anchor.ch;
+				var B2 = cm.findWordAt({line: A1, ch: A2}).head.ch;
+
+				var renderedLine = cm.display.renderedView[cm.getCursor().line].measure.map;
+
+				$('.is-word-focused').removeClass('is-word-focused');
+
+				for (var i in renderedLine) {
+					if (typeof(renderedLine[i]) === 'object') {
+						$(renderedLine[i]).parent().addClass('is-word-focused');
+					}
+				}
+			};
+
+			var toggleSyntaxFocusMode = function (e) {
+				if (!!focusActive) {
+					$(e.toolbarElements.focusMode).removeClass('is-option-active');
+					$('.is-word-focused').removeClass('is-word-focused');
+					simplemde.codemirror.off('cursorActivity', activateSyntax);
+					simplemde.codemirror.off('inputRead', activateSyntax);
+					focusActive = false;
+				} else {
+					$(e.toolbarElements.focusMode).addClass('is-option-active');
+					simplemde.codemirror.on('cursorActivity', activateSyntax);
+					simplemde.codemirror.on('inputRead', activateSyntax);
+					focusActive = true;
+				}
+			};
 			
 			var configuration = $.extend({
 				element: element,
@@ -38,6 +73,12 @@
 					"side-by-side",
 					"fullscreen",
 					{
+						name: 'focusMode',
+						action: toggleSyntaxFocusMode,
+						className: 'fa fa-hashtag',
+						title: 'Show syntax on focus'
+					},
+					{
 						name: 'advancedMode',
 						action: toggleExpertMode,
 						className: 'fa fa-code',
@@ -48,6 +89,13 @@
 			
 			var simplemde = new SimpleMDE(configuration);
 
+
+			simplemde.codemirror.on('beforeChange', function(cm, data) {
+				if (/[#*_-]/.test(data.text[0]) && !$('.CodeMirror-wrap').hasClass('is-advanced-mode')) {
+					data.text[0] = '\\' + data.text[0];
+				}
+			});
+
 			simplemde.codemirror.on('focus', function () {
 				$('body').addClass('editor-focused');
 			});
@@ -55,6 +103,7 @@
 			simplemde.codemirror.on('blur', function () {
 				$('body').removeClass('editor-focused');
 			});
+
 
 			ctn.addClass('field-simplemde');
 			
