@@ -89,10 +89,11 @@
 			
 			var simplemde = new SimpleMDE(configuration);
 
-
 			simplemde.codemirror.on('beforeChange', function(cm, data) {
-				if (/[#*_-]/.test(data.text[0]) && !$('.CodeMirror-wrap').hasClass('is-advanced-mode')) {
-					data.text[0] = '\\' + data.text[0];
+				if (data.origin === '+input') {
+					if (/[#*_-]/.test(data.text[0]) && !$('.CodeMirror-wrap').hasClass('is-advanced-mode')) {
+						data.text[0] = '\\' + data.text[0];
+					}
 				}
 			});
 
